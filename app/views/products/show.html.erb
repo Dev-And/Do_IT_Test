@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="thumbnail">
+        <img class="img-responsive" src="http://placehold.it/800x300" alt="">
+
+        <div class="caption-full">
+          <h4 class="pull-right">$<%= @product.price %></h4>
+          <h4><%= @product.name %></h4>
+
+          <p>See more snippets like these online store reviews at
+            <a target="_blank" href="http://bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+
+          <p>Want to make these reviews work? Check out
+            <strong><a href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this
+              building a review system tutorial</a>
+            </strong>over at maxoffsky.com!</p>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum</p>
+        </div>
+        <div class="ratings">
+
+          <p>
+            <% if current_user %>
+                <%= rating_for @product, "original_score", disable_after_rate: false %>
+            <% else %>
+                <%= rating_for @product, "original_score", active: false %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+      <hr>
+      <div class="well">
+
+
+        <div class="row">
+          <% @product.comments.each do |comment| %>
+
+              <div class="col-md-12">
+                <% unless comment.user.nil? %>
+                    <p> <%= comment.user.email %> </p>
+
+                    <p>
+                      <%= rating_for_user @product, comment.user, "original_score", active: true %>
+                    </p>
+
+                    <p><%= comment.content %></p>
+                    </div>
+                <% end %>
+          <% end %>
+          <div class="col-md-5">
+            <%= form_for [@product, @product.comments.build] do |f| %>
+
+                <p>
+                  <%= f.text_area :content, class: "form-control" %>
+                </p>
+                <p>
+                  <%= f.submit class: "btn btn-submit" %>
+                </p>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- /.container --
