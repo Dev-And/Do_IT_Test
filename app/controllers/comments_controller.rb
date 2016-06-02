@@ -3,8 +3,15 @@ class CommentsController < ApplicationController
 
   def create
     @product = Product.find(params[:product_id])
+
     @comment = @product.comments.create(content: comment_params[:content], user_id: current_user.id)
-   # @comment.user_id = current_user.id if current_user
+    if @comment.save
+      flash[:success] = "Comment created"
+      redirect_to @product
+    else
+      flash[:error] = "Something went wrong"
+      redirect_to @product
+    end
   end
 
   private
